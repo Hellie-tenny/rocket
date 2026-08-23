@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { getPublishedPostBySlug, type Post } from "../lib/posts";
+import { getPublishedPostBySlug, incrementPostViews, type Post } from "../lib/posts";
+import AdSlot from "../components/AdSlot";
 
 export default function BlogPost() {
   const { slug } = useParams();
@@ -11,9 +12,23 @@ export default function BlogPost() {
   useEffect(() => {
     if (!slug) return;
     getPublishedPostBySlug(slug)
-      .then(setPost)
+      .then((found) => {
+        setPost(found);
+        if (found) trackView(found.id);
+      })
       .finally(() => setLoading(false));
   }, [slug]);
+
+  // Count each post view once per browser session so refreshes/rerenders
+  // don't inflate the count.
+  const trackView = (postId: string) => {
+    const key = `viewed-${postId}`;
+    if (sessionStorage.getItem(key)) return;
+    sessionStorage.setItem(key, "1");
+    incrementPostViews(postId).catch(() => {
+      // Non-fatal — view count is a nice-to-have, not core functionality.
+    });
+  };
 
   if (loading) {
     return <p className="mx-auto max-w-3xl px-6 py-24 text-sm text-ink-500">Loading…</p>;
@@ -47,10 +62,14 @@ export default function BlogPost() {
         />
       )}
 
+      <AdSlot />
+
       <div
         className="prose prose-sm mt-8 max-w-none"
         dangerouslySetInnerHTML={{ __html: post.content }}
       />
+
+      <AdSlot />
     </article>
   );
 }

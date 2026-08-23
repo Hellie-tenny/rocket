@@ -82,6 +82,7 @@ export default function Posts() {
                       {post.published ? "Published" : "Draft"}
                     </span>
                     <span>/blog/{post.slug}</span>
+                    <span>· {post.views ?? 0} views</span>
                   </div>
                 </div>
                 <div className="flex shrink-0 gap-3">

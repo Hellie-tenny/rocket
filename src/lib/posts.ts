@@ -5,6 +5,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  increment,
   orderBy,
   query,
   serverTimestamp,
@@ -22,6 +23,7 @@ export interface Post {
   content: string; // HTML from the rich text editor
   coverImageUrl: string | null;
   published: boolean;
+  views: number;
   createdAt: Timestamp | null;
   updatedAt: Timestamp | null;
 }
@@ -43,6 +45,7 @@ export function slugify(title: string): string {
 export async function createPost(input: PostInput): Promise<string> {
   const docRef = await addDoc(postsRef, {
     ...input,
+    views: 0,
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
   });
@@ -58,6 +61,12 @@ export async function updatePost(id: string, input: Partial<PostInput>): Promise
 
 export async function deletePost(id: string): Promise<void> {
   await deleteDoc(doc(db, "posts", id));
+}
+
+// Public write — increments the view count only. Firestore rules restrict
+// this so anonymous visitors can touch the `views` field and nothing else.
+export async function incrementPostViews(id: string): Promise<void> {
+  await updateDoc(doc(db, "posts", id), { views: increment(1) });
 }
 
 // Admin: all posts regardless of published state, newest first.

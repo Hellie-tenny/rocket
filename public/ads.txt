@@ -1,0 +1,6 @@
+# Once approved for AdSense, replace this with the real line Google gives you.
+# It looks like:
+# google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
+#
+# Find it in your AdSense account under Sites > [your site] > ads.txt,
+# or Account > Account information.
