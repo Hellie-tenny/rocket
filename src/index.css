@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Poppins", ui-sans-serif, system-ui, sans-serif;
+
+  --color-ink-950: #0d0d0d;
+  --color-ink-900: #161616;
+  --color-ink-700: #3a3a3a;
+  --color-ink-500: #6b6b6b;
+  --color-ink-300: #a8a8a8;
+
+  --color-paper: #ffffff;
+  --color-paper-dim: #f7f6f4;
+  --color-line: #e7e5e1;
+
+  --color-orange-600: #d9540f;
+  --color-orange-500: #f2680f;
+  --color-orange-400: #ff8a3d;
+  --color-orange-100: #ffe4d1;
+}
+
+:root {
+  color-scheme: light;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background-color: var(--color-paper);
+  color: var(--color-ink-950);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-orange-500);
+  outline-offset: 2px;
+}
