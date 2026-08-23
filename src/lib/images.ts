@@ -1,8 +1,9 @@
 import imageCompression from "browser-image-compression";
-import { getDownloadURL, ref, uploadBytes, deleteObject } from "firebase/storage";
-import { storage } from "./firebase";
 
-// Resize/compress before upload so we don't burn through the Storage free tier.
+const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME as string;
+const UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET as string;
+
+// Resize/compress before upload so we stay well within Cloudinary's free tier.
 // 1600px wide max, targets a small file size, converts to webp where possible.
 async function prepareCoverImage(file: File): Promise<File> {
   return imageCompression(file, {
@@ -13,20 +14,36 @@ async function prepareCoverImage(file: File): Promise<File> {
   });
 }
 
+// Uploads to Cloudinary via an unsigned upload preset — no API secret needed
+// client-side, no billing account required. postId is used as a folder tag
+// so images stay organized and traceable back to their post.
 export async function uploadCoverImage(file: File, postId: string): Promise<string> {
   const prepared = await prepareCoverImage(file);
-  const path = `covers/${postId}-${Date.now()}.webp`;
-  const storageRef = ref(storage, path);
-  await uploadBytes(storageRef, prepared);
-  return getDownloadURL(storageRef);
+
+  const formData = new FormData();
+  formData.append("file", prepared);
+  formData.append("upload_preset", UPLOAD_PRESET);
+  formData.append("folder", "covers");
+  formData.append("public_id", `${postId}-${Date.now()}`);
+
+  const response = await fetch(
+    `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+    { method: "POST", body: formData }
+  );
+
+  if (!response.ok) {
+    throw new Error("Cloudinary upload failed");
+  }
+
+  const data = await response.json();
+  return data.secure_url as string;
 }
 
-// Best-effort cleanup when a cover is replaced or a post is deleted.
-export async function deleteCoverImage(url: string): Promise<void> {
-  try {
-    const storageRef = ref(storage, url);
-    await deleteObject(storageRef);
-  } catch {
-    // Non-fatal — the object may already be gone or the URL may be external.
-  }
+// Cloudinary deletion requires a signed, authenticated API call (needs the
+// API secret, which can't safely live in client code). We don't delete the
+// remote asset automatically — just stop referencing it in Firestore.
+// Periodically clear unused images from the Cloudinary Media Library console
+// if storage usage becomes a concern.
+export async function deleteCoverImage(_url: string): Promise<void> {
+  // Intentional no-op — see comment above.
 }

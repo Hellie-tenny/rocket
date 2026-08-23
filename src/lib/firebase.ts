@@ -1,7 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
 import { getAnalytics, isSupported } from "firebase/analytics";
 
 // Values come from your Firebase project settings (Project settings > General > Your apps).
@@ -20,7 +19,6 @@ const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
 export const db = getFirestore(app);
-export const storage = getStorage(app);
 
 // Analytics only works in the browser and only if the environment supports it
 // (e.g. not during SSR/build) — guard it so this file never throws on import.
