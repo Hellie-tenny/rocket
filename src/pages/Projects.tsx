@@ -1,3 +1,5 @@
+import { Helmet } from "react-helmet-async";
+
 interface Project {
   name: string;
   description: string;
@@ -31,6 +33,11 @@ const projects: Project[] = [
 export default function Projects() {
   return (
     <section className="mx-auto max-w-6xl px-6 py-24">
+      <Helmet>
+        <title>Our Work — Rocket</title>
+        <meta name="description" content="Products Rocket has designed, built, and shipped." />
+      </Helmet>
+
       <h1 className="font-display text-3xl font-bold sm:text-4xl">Our Work</h1>
       <p className="mt-4 max-w-xl text-ink-500">
         Products we've designed, built, and shipped.

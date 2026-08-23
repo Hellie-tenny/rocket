@@ -1,6 +1,16 @@
+import { Helmet } from "react-helmet-async";
+
 export default function About() {
   return (
     <section className="mx-auto max-w-3xl px-6 py-24">
+      <Helmet>
+        <title>About — Rocket</title>
+        <meta
+          name="description"
+          content="Rocket is a small, tech-focused team building lean, useful products."
+        />
+      </Helmet>
+
       <h1 className="font-display text-3xl font-bold sm:text-4xl">About Rocket</h1>
 
       <div className="mt-8 space-y-6 text-ink-700">

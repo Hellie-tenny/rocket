@@ -1,6 +1,16 @@
+import { Helmet } from "react-helmet-async";
+
 export default function Home() {
   return (
     <>
+      <Helmet>
+        <title>Rocket — Tech-focused product studio</title>
+        <meta
+          name="description"
+          content="Rocket builds technology products, tools, and ideas worth shipping."
+        />
+      </Helmet>
+
       <section className="mx-auto max-w-6xl px-6 pb-20 pt-24 sm:pt-32">
         <h1 className="font-display max-w-3xl text-4xl font-bold leading-[1.1] tracking-tight sm:text-6xl">
           We build technology that

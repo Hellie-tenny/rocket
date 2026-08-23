@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { getPublishedPosts, type Post } from "../lib/posts";
 
 export default function Blog() {
@@ -14,6 +15,11 @@ export default function Blog() {
 
   return (
     <section className="mx-auto max-w-6xl px-6 py-24">
+      <Helmet>
+        <title>Blog — Rocket</title>
+        <meta name="description" content="Notes on what Rocket is building." />
+      </Helmet>
+
       <h1 className="font-display text-3xl font-bold sm:text-4xl">Blog</h1>
 
       {loading ? (
@@ -28,6 +34,7 @@ export default function Blog() {
                 <img
                   src={post.coverImageUrl}
                   alt=""
+                  loading="lazy"
                   className="aspect-video w-full rounded-lg border border-line object-cover"
                 />
               )}

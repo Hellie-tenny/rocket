@@ -58,6 +58,7 @@ export default function BlogPost() {
         <img
           src={post.coverImageUrl}
           alt=""
+          fetchPriority="high"
           className="mt-8 aspect-video w-full rounded-lg border border-line object-cover"
         />
       )}
