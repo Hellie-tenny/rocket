@@ -101,7 +101,8 @@ export default function PostEditor() {
         await createPost(input);
       }
       navigate("/admin/posts");
-    } catch {
+    } catch (err) {
+      console.error("Failed to save post:", err);
       setError("Something went wrong saving the post. Try again.");
     } finally {
       setSaving(false);

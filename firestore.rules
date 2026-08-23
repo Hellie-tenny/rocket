@@ -4,13 +4,16 @@ service cloud.firestore {
   match /databases/{database}/documents {
 
     match /posts/{postId} {
-      // Public can read only published posts.
-      allow read: if resource.data.published == true;
+      // Public can read only published posts. The admin (you) can also
+      // read drafts — needed for the admin post list and slug-uniqueness
+      // checks, which query across all posts regardless of published state.
+      allow read: if resource.data.published == true
+        || (request.auth != null && request.auth.uid == "YOUR_ADMIN_UID");
 
       // Only the signed-in admin (you) can create/update/delete.
       // Replace YOUR_ADMIN_UID with your Firebase Auth user UID
       // (Authentication > Users tab in the Firebase console).
-      allow write: if request.auth != null && request.auth.uid == "o4SEhLGosAVha1U3CFzsQ5eAcRP2";
+      allow write: if request.auth != null && request.auth.uid == "YOUR_ADMIN_UID";
     }
   }
 }

@@ -18,7 +18,11 @@ export default function AdminLayout() {
   return (
     <div className="flex min-h-screen bg-paper text-ink-950">
       <aside className="flex w-60 shrink-0 flex-col border-r border-line px-4 py-6">
-        <img src="/rocket-logo.png" alt="Rocket" className="mb-8 h-6 w-auto" />
+        <img
+          src="/rocket-logo.png"
+          alt="Rocket"
+          className="mb-8 h-6 w-auto shrink-0 self-start object-contain"
+        />
 
         <nav className="flex-1 space-y-1">
           <NavLink to="/admin" end className={linkClass}>

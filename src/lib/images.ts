@@ -32,7 +32,8 @@ export async function uploadCoverImage(file: File, postId: string): Promise<stri
   );
 
   if (!response.ok) {
-    throw new Error("Cloudinary upload failed");
+    const body = await response.json().catch(() => null);
+    throw new Error(body?.error?.message ?? `Cloudinary upload failed (${response.status})`);
   }
 
   const data = await response.json();

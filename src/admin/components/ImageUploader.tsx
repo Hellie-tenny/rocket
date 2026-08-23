@@ -18,7 +18,8 @@ export default function ImageUploader({ postId, value, onChange }: ImageUploader
     try {
       const url = await uploadCoverImage(file, postId);
       onChange(url);
-    } catch {
+    } catch (err) {
+      console.error("Cover image upload failed:", err);
       setError("Upload failed. Try a different image.");
     } finally {
       setUploading(false);
