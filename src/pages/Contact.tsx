@@ -6,6 +6,7 @@ export default function Contact() {
       <Helmet>
         <title>Contact — Rocket</title>
         <meta name="description" content="Get in touch with Rocket." />
+        <link rel="canonical" href="https://rocket-technologies.web.app/contact" />
       </Helmet>
 
       <h1 className="font-display text-3xl font-bold sm:text-4xl">Contact</h1>

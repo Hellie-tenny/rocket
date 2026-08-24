@@ -36,6 +36,7 @@ export default function Projects() {
       <Helmet>
         <title>Our Work — Rocket</title>
         <meta name="description" content="Products Rocket has designed, built, and shipped." />
+        <link rel="canonical" href="https://rocket-technologies.web.app/projects" />
       </Helmet>
 
       <h1 className="font-display text-3xl font-bold sm:text-4xl">Our Work</h1>

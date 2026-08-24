@@ -9,6 +9,7 @@ export default function About() {
           name="description"
           content="Rocket is a small, tech-focused team building lean, useful products."
         />
+        <link rel="canonical" href="https://rocket-technologies.web.app/about" />
       </Helmet>
 
       <h1 className="font-display text-3xl font-bold sm:text-4xl">About Rocket</h1>

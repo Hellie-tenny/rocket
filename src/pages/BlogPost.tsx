@@ -16,6 +16,9 @@ export default function BlogPost() {
         setPost(found);
         if (found) trackView(found.id);
       })
+      .catch((err) => {
+        console.error("Failed to load post:", err);
+      })
       .finally(() => setLoading(false));
   }, [slug]);
 
@@ -50,6 +53,18 @@ export default function BlogPost() {
       <Helmet>
         <title>{post.title} — Rocket</title>
         <meta name="description" content={post.excerpt} />
+        <link rel="canonical" href={`https://rocket-technologies.web.app/blog/${post.slug}`} />
+
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={`${post.title} — Rocket`} />
+        <meta property="og:description" content={post.excerpt} />
+        <meta property="og:url" content={`https://rocket-technologies.web.app/blog/${post.slug}`} />
+        {post.coverImageUrl && <meta property="og:image" content={post.coverImageUrl} />}
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${post.title} — Rocket`} />
+        <meta name="twitter:description" content={post.excerpt} />
+        {post.coverImageUrl && <meta name="twitter:image" content={post.coverImageUrl} />}
       </Helmet>
 
       <h1 className="font-display text-3xl font-bold sm:text-4xl">{post.title}</h1>

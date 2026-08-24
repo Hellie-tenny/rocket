@@ -24,7 +24,7 @@ export default function AdminLayout() {
       <NavLink to="/admin" end className={linkClass} onClick={closeSidebar}>
         Dashboard
       </NavLink>
-      <NavLink to="/admin/posts" className={linkClass} onClick={closeSidebar}>
+      <NavLink to="/admin/posts" end className={linkClass} onClick={closeSidebar}>
         Posts
       </NavLink>
       <NavLink to="/admin/posts/new" className={linkClass} onClick={closeSidebar}>

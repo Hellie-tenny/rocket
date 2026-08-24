@@ -6,10 +6,15 @@ import { getPublishedPosts, type Post } from "../lib/posts";
 export default function Blog() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     getPublishedPosts()
       .then(setPosts)
+      .catch((err) => {
+        console.error("Failed to load posts:", err);
+        setError(true);
+      })
       .finally(() => setLoading(false));
   }, []);
 
@@ -18,12 +23,17 @@ export default function Blog() {
       <Helmet>
         <title>Blog — Rocket</title>
         <meta name="description" content="Notes on what Rocket is building." />
+        <link rel="canonical" href="https://rocket-technologies.web.app/blog" />
       </Helmet>
 
       <h1 className="font-display text-3xl font-bold sm:text-4xl">Blog</h1>
 
       {loading ? (
         <p className="mt-6 text-sm text-ink-500">Loading…</p>
+      ) : error ? (
+        <p className="mt-6 text-sm text-orange-600">
+          Couldn't load posts right now. Check the browser console for details.
+        </p>
       ) : posts.length === 0 ? (
         <p className="mt-6 text-sm text-ink-500">No posts published yet.</p>
       ) : (

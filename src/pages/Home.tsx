@@ -9,6 +9,8 @@ export default function Home() {
           name="description"
           content="Rocket builds technology products, tools, and ideas worth shipping."
         />
+        <link rel="canonical" href="https://rocket-technologies.web.app/" />
+        <meta property="og:url" content="https://rocket-technologies.web.app/" />
       </Helmet>
 
       <section className="mx-auto max-w-6xl px-6 pb-20 pt-24 sm:pt-32">
