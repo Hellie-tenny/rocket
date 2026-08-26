@@ -1,26 +1,45 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { getPublishedPostBySlug, incrementPostViews, type Post } from "../lib/posts";
+import { getPublishedPostBySlug, getPublishedPosts, incrementPostViews, type Post } from "../lib/posts";
 import AdSlot from "../components/AdSlot";
+import MorePosts from "../components/MorePosts";
 
 export default function BlogPost() {
   const { slug } = useParams();
   const [post, setPost] = useState<Post | null>(null);
+  const [morePosts, setMorePosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!slug) return;
+    setLoading(true);
     getPublishedPostBySlug(slug)
       .then((found) => {
         setPost(found);
-        if (found) trackView(found.id);
+        if (found) {
+          trackView(found.id);
+          loadMorePosts(found.id);
+        }
       })
       .catch((err) => {
         console.error("Failed to load post:", err);
       })
       .finally(() => setLoading(false));
   }, [slug]);
+
+  // No tagging/category system exists yet, so the best available "related
+  // posts" signal is simply recency — most recently published, excluding
+  // the post currently being read.
+  const loadMorePosts = (currentPostId: string) => {
+    getPublishedPosts()
+      .then((all) => {
+        setMorePosts(all.filter((p) => p.id !== currentPostId).slice(0, 3));
+      })
+      .catch((err) => {
+        console.error("Failed to load more posts:", err);
+      });
+  };
 
   // Count each post view once per browser session so refreshes/rerenders
   // don't inflate the count.
@@ -86,6 +105,8 @@ export default function BlogPost() {
       />
 
       <AdSlot />
+
+      <MorePosts posts={morePosts} />
     </article>
   );
 }
