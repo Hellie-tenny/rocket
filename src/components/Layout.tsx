@@ -103,9 +103,12 @@ export default function Layout() {
       <footer className="border-t border-line bg-paper-dim">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-10 sm:flex-row">
           <img src="/rocket-logo.png" alt="Rocket" className="h-6 w-auto opacity-80" />
-          <p className="text-sm text-ink-500">
-            &copy; {new Date().getFullYear()} Rocket. All rights reserved.
-          </p>
+          <div className="flex items-center gap-4 text-sm text-ink-500">
+            <NavLink to="/privacy" className="hover:text-ink-950">
+              Privacy Policy
+            </NavLink>
+            <span>&copy; {new Date().getFullYear()} Rocket. All rights reserved.</span>
+          </div>
         </div>
       </footer>
     </div>
