@@ -53,19 +53,46 @@ export default function Home() {
       <section className="border-t border-line bg-paper-dim">
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 px-6 py-16 sm:grid-cols-3">
           <div>
-            <h2 className="font-display text-lg font-semibold">Products</h2>
+            <picture>
+              <source srcSet="/products-icon.webp" type="image/webp" />
+              <img
+                src="/products-icon.png"
+                alt=""
+                loading="lazy"
+                className="h-12 w-12"
+              />
+            </picture>
+            <h2 className="font-display mt-4 text-lg font-semibold">Products</h2>
             <p className="mt-2 text-sm text-ink-500">
               Tools we design, build, and ship end to end.
             </p>
           </div>
           <div>
-            <h2 className="font-display text-lg font-semibold">Craft</h2>
+            <picture>
+              <source srcSet="/craft-icon.webp" type="image/webp" />
+              <img
+                src="/craft-icon.png"
+                alt=""
+                loading="lazy"
+                className="h-12 w-12"
+              />
+            </picture>
+            <h2 className="font-display mt-4 text-lg font-semibold">Craft</h2>
             <p className="mt-2 text-sm text-ink-500">
               Careful engineering and design in everything we release.
             </p>
           </div>
           <div>
-            <h2 className="font-display text-lg font-semibold">Writing</h2>
+            <picture>
+              <source srcSet="/writing-icon.webp" type="image/webp" />
+              <img
+                src="/writing-icon.png"
+                alt=""
+                loading="lazy"
+                className="h-12 w-12"
+              />
+            </picture>
+            <h2 className="font-display mt-4 text-lg font-semibold">Writing</h2>
             <p className="mt-2 text-sm text-ink-500">
               Notes on what we're building, on the blog.
             </p>
