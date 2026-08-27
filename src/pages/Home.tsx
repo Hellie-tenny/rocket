@@ -13,28 +13,40 @@ export default function Home() {
         <meta property="og:url" content="https://rocket-technologies.web.app/" />
       </Helmet>
 
-      <section className="mx-auto max-w-6xl px-6 pb-20 pt-24 sm:pt-32">
-        <h1 className="font-display max-w-3xl text-4xl font-bold leading-[1.1] tracking-tight sm:text-6xl">
-          We build technology that
-          <span className="text-orange-500"> takes off.</span>
-        </h1>
-        <p className="mt-6 max-w-xl text-lg text-ink-500">
-          Rocket is a tech-focused company building products, tools, and
-          ideas worth shipping. Site under construction — more soon.
-        </p>
-        <div className="mt-10 flex gap-4">
-          <a
-            href="/contact"
-            className="rounded-full bg-orange-500 px-6 py-3 text-sm font-semibold text-paper transition-colors hover:bg-orange-600"
-          >
-            Get in touch
-          </a>
-          <a
-            href="/projects"
-            className="rounded-full border border-line px-6 py-3 text-sm font-semibold text-ink-950 transition-colors hover:border-ink-950"
-          >
-            See our work
-          </a>
+      <section className="relative overflow-hidden">
+        <picture>
+          <source srcSet="/hero-rocket.webp" type="image/webp" />
+          <img
+            src="/hero-rocket.png"
+            alt=""
+            fetchPriority="high"
+            className="pointer-events-none absolute inset-y-0 right-0 hidden h-full max-w-[65%] object-contain object-right sm:block"
+          />
+        </picture>
+
+        <div className="relative mx-auto max-w-6xl px-6 pb-20 pt-24 sm:pt-32">
+          <h1 className="font-display max-w-3xl text-4xl font-bold leading-[1.1] tracking-tight sm:text-6xl">
+            We build technology that
+            <span className="text-orange-500"> takes off.</span>
+          </h1>
+          <p className="mt-6 max-w-xl text-lg text-ink-500">
+            Rocket is a tech-focused company building products, tools, and
+            ideas worth shipping. Site under construction — more soon.
+          </p>
+          <div className="mt-10 flex gap-4">
+            <a
+              href="/contact"
+              className="rounded-full bg-orange-500 px-6 py-3 text-sm font-semibold text-paper transition-colors hover:bg-orange-600"
+            >
+              Get in touch
+            </a>
+            <a
+              href="/projects"
+              className="rounded-full border border-line px-6 py-3 text-sm font-semibold text-ink-950 transition-colors hover:border-ink-950"
+            >
+              See our work
+            </a>
+          </div>
         </div>
       </section>
 
