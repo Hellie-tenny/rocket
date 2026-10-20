@@ -5,9 +5,10 @@ interface ImageUploaderProps {
   postId: string;
   value: string | null;
   onChange: (url: string | null) => void;
+  label?: string;
 }
 
-export default function ImageUploader({ postId, value, onChange }: ImageUploaderProps) {
+export default function ImageUploader({ postId, value, onChange, label = "Cover image" }: ImageUploaderProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -28,7 +29,7 @@ export default function ImageUploader({ postId, value, onChange }: ImageUploader
 
   return (
     <div>
-      <label className="block text-sm font-medium text-ink-700">Cover image</label>
+      <label className="block text-sm font-medium text-ink-700">{label}</label>
 
       {value ? (
         <div className="mt-2">

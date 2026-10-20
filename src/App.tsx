@@ -2,10 +2,12 @@ import { Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { AuthProvider } from "./lib/AuthContext";
+import { CartProvider } from "./lib/cart";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Projects from "./pages/Projects";
+import Shop from "./pages/Shop";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import Contact from "./pages/Contact";
@@ -18,6 +20,8 @@ const Login = lazy(() => import("./admin/pages/Login"));
 const Dashboard = lazy(() => import("./admin/pages/Dashboard"));
 const Posts = lazy(() => import("./admin/pages/Posts"));
 const PostEditor = lazy(() => import("./admin/pages/PostEditor"));
+const Products = lazy(() => import("./admin/pages/Products"));
+const ProductEditor = lazy(() => import("./admin/pages/ProductEditor"));
 const Analytics = lazy(() => import("./admin/pages/Analytics"));
 const AdminLayout = lazy(() => import("./admin/components/AdminLayout"));
 const ProtectedRoute = lazy(() => import("./admin/components/ProtectedRoute"));
@@ -34,12 +38,14 @@ export default function App() {
   return (
     <HelmetProvider>
       <AuthProvider>
+        <CartProvider>
         <BrowserRouter>
           <Routes>
             <Route element={<Layout />}>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/projects" element={<Projects />} />
+              <Route path="/shop" element={<Shop />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/contact" element={<Contact />} />
@@ -99,6 +105,30 @@ export default function App() {
                 }
               />
               <Route
+                path="products"
+                element={
+                  <Suspense fallback={<AdminFallback />}>
+                    <Products />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="products/new"
+                element={
+                  <Suspense fallback={<AdminFallback />}>
+                    <ProductEditor />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="products/:id/edit"
+                element={
+                  <Suspense fallback={<AdminFallback />}>
+                    <ProductEditor />
+                  </Suspense>
+                }
+              />
+              <Route
                 path="analytics"
                 element={
                   <Suspense fallback={<AdminFallback />}>
@@ -109,6 +139,7 @@ export default function App() {
             </Route>
           </Routes>
         </BrowserRouter>
+        </CartProvider>
       </AuthProvider>
     </HelmetProvider>
   );

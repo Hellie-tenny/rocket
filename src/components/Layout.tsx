@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
+import CartDrawer from "./CartDrawer";
+import { useCart } from "../lib/cart";
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
   `text-sm font-medium transition-colors ${
@@ -13,6 +15,37 @@ const mobileNavLinkClass = ({ isActive }: { isActive: boolean }) =>
 
 export default function Layout() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { count, openCart } = useCart();
+  const { pathname } = useLocation();
+  // The order button only appears once it's relevant, so blog readers never see an empty cart.
+  const showCart = count > 0 || pathname.startsWith("/shop");
+
+  const cartButton = showCart ? (
+    <button
+      type="button"
+      onClick={() => {
+        setMenuOpen(false);
+        openCart();
+      }}
+      aria-label={`Your order, ${count} ${count === 1 ? "item" : "items"}`}
+      className="relative flex h-9 w-9 items-center justify-center rounded-lg text-ink-950 transition-colors hover:text-orange-500"
+    >
+      <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6">
+        <path
+          d="M6 7h12l-1 12H7L6 7zM9 7a3 3 0 016 0"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+      {count > 0 && (
+        <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-orange-500 px-1 text-[11px] font-semibold text-paper">
+          {count}
+        </span>
+      )}
+    </button>
+  ) : null;
 
   return (
     <div className="flex min-h-screen flex-col bg-paper text-ink-950">
@@ -30,12 +63,16 @@ export default function Layout() {
             <NavLink to="/projects" className={navLinkClass}>
               Work
             </NavLink>
+            <NavLink to="/shop" className={navLinkClass}>
+              Shop
+            </NavLink>
             <NavLink to="/blog" className={navLinkClass}>
               Blog
             </NavLink>
             <NavLink to="/about" className={navLinkClass}>
               About
             </NavLink>
+            {cartButton}
             <NavLink
               to="/contact"
               className="rounded-full bg-ink-950 px-5 py-2 text-sm font-semibold text-paper transition-colors hover:bg-orange-500"
@@ -44,13 +81,15 @@ export default function Layout() {
             </NavLink>
           </div>
 
-          {/* Mobile menu toggle */}
+          {/* Mobile cart + menu toggle */}
+          <div className="flex items-center gap-1 sm:hidden">
+          {cartButton}
           <button
             type="button"
             onClick={() => setMenuOpen((open) => !open)}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
-            className="flex h-9 w-9 items-center justify-center rounded-lg text-ink-950 sm:hidden"
+            className="flex h-9 w-9 items-center justify-center rounded-lg text-ink-950"
           >
             {menuOpen ? (
               <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6">
@@ -72,6 +111,7 @@ export default function Layout() {
               </svg>
             )}
           </button>
+          </div>
         </nav>
 
         {/* Mobile nav panel */}
@@ -82,6 +122,9 @@ export default function Layout() {
             </NavLink>
             <NavLink to="/projects" onClick={() => setMenuOpen(false)} className={mobileNavLinkClass}>
               Work
+            </NavLink>
+            <NavLink to="/shop" onClick={() => setMenuOpen(false)} className={mobileNavLinkClass}>
+              Shop
             </NavLink>
             <NavLink to="/blog" onClick={() => setMenuOpen(false)} className={mobileNavLinkClass}>
               Blog
@@ -99,6 +142,8 @@ export default function Layout() {
       <main className="flex-1">
         <Outlet />
       </main>
+
+      <CartDrawer />
 
       <footer className="border-t border-line bg-paper-dim">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-10 sm:flex-row">
