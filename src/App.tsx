@@ -22,6 +22,8 @@ const Posts = lazy(() => import("./admin/pages/Posts"));
 const PostEditor = lazy(() => import("./admin/pages/PostEditor"));
 const Products = lazy(() => import("./admin/pages/Products"));
 const ProductEditor = lazy(() => import("./admin/pages/ProductEditor"));
+const AdminProjects = lazy(() => import("./admin/pages/AdminProjects"));
+const ProjectEditor = lazy(() => import("./admin/pages/ProjectEditor"));
 const Analytics = lazy(() => import("./admin/pages/Analytics"));
 const AdminLayout = lazy(() => import("./admin/components/AdminLayout"));
 const ProtectedRoute = lazy(() => import("./admin/components/ProtectedRoute"));
@@ -125,6 +127,30 @@ export default function App() {
                 element={
                   <Suspense fallback={<AdminFallback />}>
                     <ProductEditor />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="projects"
+                element={
+                  <Suspense fallback={<AdminFallback />}>
+                    <AdminProjects />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="projects/new"
+                element={
+                  <Suspense fallback={<AdminFallback />}>
+                    <ProjectEditor />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="projects/:id/edit"
+                element={
+                  <Suspense fallback={<AdminFallback />}>
+                    <ProjectEditor />
                   </Suspense>
                 }
               />

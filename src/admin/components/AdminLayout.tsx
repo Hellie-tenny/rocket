@@ -33,6 +33,9 @@ export default function AdminLayout() {
       <NavLink to="/admin/products" className={linkClass} onClick={closeSidebar}>
         Products
       </NavLink>
+      <NavLink to="/admin/projects" className={linkClass} onClick={closeSidebar}>
+        Projects
+      </NavLink>
       <NavLink to="/admin/analytics" className={linkClass} onClick={closeSidebar}>
         Analytics
       </NavLink>
