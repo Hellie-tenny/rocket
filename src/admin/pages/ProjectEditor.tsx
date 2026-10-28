@@ -200,8 +200,8 @@ export default function ProjectEditor() {
             <option value="phone">Phone (tall)</option>
           </select>
           <p className="mt-1 text-xs text-ink-500">
-            Wide screenshots show one at a time with thumbnails. Tall phone screenshots show side
-            by side in a swipeable row. Tapping any screenshot enlarges it.
+            Shown when someone opens "View screenshots" on the card. Wide ones show one at a
+            time with arrows and thumbnails; tall phone ones show side by side in a swipeable row.
           </p>
         </div>
 

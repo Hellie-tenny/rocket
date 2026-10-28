@@ -94,7 +94,7 @@ export default function ScreenshotsUploader({
         </button>
       )}
       <p className="mt-1 text-xs text-ink-500">
-        Up to {max}. The first one is shown by default on the Our Work page.
+        Up to {max}. The first one is shown first when the project is opened.
       </p>
 
       {error && <p className="mt-2 text-sm text-orange-600">{error}</p>}
